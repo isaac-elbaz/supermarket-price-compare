@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Supermarket Price Comparison</title>
+    <link rel="icon" href="https://fav.farm/🛒"/>
     <style>
         * {
             margin: 0;
@@ -77,6 +78,12 @@
 
         .price-per-unit {
             color: #667eea;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        .gap-from-lowest-price-pct {
+            color: #cccccc;
             font-weight: 600;
             font-size: 1.1em;
         }
@@ -166,12 +173,18 @@
     function addRow() {
         const letter = String.fromCharCode("a".charCodeAt(0) + products.length); // a, b, c, etc.
         products.push({
-            id: Date.now(),
+            id: Date.now() + getRandomIntInclusive(1, 1000),
             name: letter,
             price: "",
             quantity: "",
         });
         renderTable();
+    }
+
+    function getRandomIntInclusive(min, max) {
+        min = Math.ceil(min); // Ensure min is an integer, rounding up if necessary
+        max = Math.floor(max); // Ensure max is an integer, rounding down if necessary
+        return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
     function removeRow(id) {
@@ -187,34 +200,49 @@
         }
     }
 
+    function toInt(value) {
+        if (!value) {
+            return 0;
+        }
+        return Math.round(parseFloat(value) * 100);
+    }
+
+    function calcPricePerUnit(price, quantity) {
+        if (!price || !quantity) {
+            return 0;
+        }
+        return Math.round((price / quantity) * 100);
+    }
+
     function renderTable() {
         const tbody = document.getElementById("tableBody");
 
         // Find lowest price per unit for highlighting (only valid products)
-        let lowestPricePerUnit = Infinity;
-        let lowestId = null;
+        let lowestPricePerUnit = Math.round(Number.MAX_VALUE);
+        let count = 0;
 
         products.forEach(product => {
-            const price = parseFloat(product.price);
-            const quantity = parseFloat(product.quantity);
+            const price = toInt(product.price);
+            const quantity = toInt(product.quantity);
             // Only consider products with valid price AND quantity
             if (price > 0 && quantity > 0) {
-                const pricePerUnit = price / quantity;
-                if (pricePerUnit < lowestPricePerUnit) {
-                    lowestPricePerUnit = pricePerUnit;
-                    lowestId = product.id;
-                }
+                lowestPricePerUnit = Math.min(lowestPricePerUnit, calcPricePerUnit(price, quantity));
+                count++;
             }
         });
+        const moreThanOne = count > 1;
 
         tbody.innerHTML = products.map(product => {
-            const price = parseFloat(product.price) || 0;
-            const quantity = parseFloat(product.quantity) || 0;
-            const pricePerUnit = quantity > 0 && price > 0 ? (price / quantity).toFixed(2) : "";
-            const isLowest = product.id === lowestId;
-
+            const price = toInt(product.price);
+            const quantity = toInt(product.quantity);
+            const pricePerUnit = calcPricePerUnit(price, quantity);
+            const isLowest = pricePerUnit && moreThanOne > 0 && pricePerUnit === lowestPricePerUnit;
+            const pricePerUnitStr = pricePerUnit ? (pricePerUnit / 100).toFixed(2) : "";
+            const gapFromLowestPricePctStr = pricePerUnit && moreThanOne && !isLowest
+                ? " (+" + Math.round(((((pricePerUnit - lowestPricePerUnit) / lowestPricePerUnit) * 100))) + "%)"
+                : "";
             return `
-                    <tr ${isLowest ? "class=\"best-price\"" : ""}>
+                    <tr ${moreThanOne && isLowest ? "class=\"best-price\"" : ""}>
                         <td>
                             <input type="text" value="${product.name}"
                                    onchange="updateProduct(${product.id}, 'name', this.value)"
@@ -223,15 +251,16 @@
                         <td>
                             <input type="number" value="${product.price}"
                                    onchange="updateProduct(${product.id}, 'price', this.value)"
-                                   placeholder="0.00" step="0.01" min="0">
+                                   placeholder="0.00" min="0">
                         </td>
                         <td>
                             <input type="number" value="${product.quantity}"
                                    onchange="updateProduct(${product.id}, 'quantity', this.value)"
-                                   placeholder="0" step="0.01" min="0">
+                                   placeholder="0" min="0">
                         </td>
                         <td>
-                            <span class="price-per-unit">${pricePerUnit}</span>
+                            <span class="price-per-unit">${pricePerUnitStr}</span>
+                            <span class="gap-from-lowest-price-pct">${gapFromLowestPricePctStr}</span>
                         </td>
                         <td class="remove-btn" onclick="removeRow(${product.id})">
                             🗑️
