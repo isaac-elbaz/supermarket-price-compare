@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Supermarket Price Comparison</title>
     <link rel="icon" href="https://fav.farm/🛒"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -13,18 +14,26 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             padding: 20px;
         }
 
-        .container {
+        hr {
+            margin-top: 50px;
+            border: 0;
+        }
+
+        .supermarket-container {
             max-width: 900px;
             margin: 0 auto;
         }
 
-        h1 {
+        .supermarket-container h1 {
             text-align: center;
             color: white;
             margin-bottom: 30px;
@@ -32,7 +41,7 @@
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
-        .table-wrapper {
+        .supermarket-container .table-wrapper {
             background: white;
             padding: 25px;
             border-radius: 10px;
@@ -40,29 +49,29 @@
             overflow-x: auto;
         }
 
-        table {
+        .supermarket-container table {
             width: 100%;
             border-collapse: collapse;
         }
 
-        thead {
+        .supermarket-container thead {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
         }
 
-        th {
+        .supermarket-container th {
             padding: 15px;
-            text-align: left;
+            /*text-align: left;*/
             font-weight: 600;
             border: none;
         }
 
-        td {
+        .supermarket-container td {
             padding: 12px 15px;
             border-bottom: 1px solid #eee;
         }
 
-        input {
+        .supermarket-container input {
             width: 100%;
             padding: 8px;
             border: 2px solid #ddd;
@@ -71,46 +80,46 @@
             transition: border-color 0.3s;
         }
 
-        input:focus {
+        .supermarket-container input:focus {
             outline: none;
             border-color: #667eea;
         }
 
-        .price-per-unit {
+        .supermarket-container .price-per-unit {
             color: #667eea;
             font-weight: 600;
             font-size: 1.1em;
         }
 
-        .gap-from-lowest-price-pct {
+        .supermarket-container .gap-from-lowest-price-pct {
             color: #cccccc;
             font-weight: 600;
             font-size: 1.1em;
         }
 
-        .best-price {
+        .supermarket-container .best-price {
             background: #d4edda !important;
         }
 
-        .best-price .price-per-unit {
+        .supermarket-container .best-price .price-per-unit {
             color: #155724;
             font-weight: bold;
         }
 
-        .remove-btn {
+        .supermarket-container .remove-btn {
             padding: 6px 0 6px 12px;
             color: white;
             cursor: pointer;
             font-size: 16px;
         }
 
-        .button-group {
+        .supermarket-container .button-group {
             margin-top: 20px;
             display: flex;
             gap: 10px;
         }
 
-        .add-btn {
+        .supermarket-container .add-btn {
             width: 100%;
             padding: 12px 0;
             background: #667eea;
@@ -124,26 +133,159 @@
         }
 
         @media (max-width: 768px) {
-            .table-wrapper {
+            .supermarket-container .table-wrapper {
                 padding: 15px;
             }
 
-            th, td {
+            .supermarket-container th, td {
                 padding: 10px 8px;
             }
 
-            th {
+            .supermarket-container th {
                 font-size: 12px;
             }
 
-            input {
+            .supermarket-container input {
                 padding: 6px;
             }
+        }
+
+        .scanner-container {
+            max-width: 500px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .scanner-container .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .scanner-container .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .scanner-container .header p {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .scanner-container .content {
+            padding: 30px;
+        }
+
+        .scanner-container #reader {
+            width: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .scanner-container .scan-btn {
+            width: 100%;
+            padding: 16px;
+            font-size: 18px;
+            font-weight: 600;
+            color: white;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-bottom: 20px;
+        }
+
+        .scanner-container .scan-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .scanner-container .scan-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .scanner-container .result-container {
+            display: none;
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .scanner-container .result-container.active {
+            display: block;
+        }
+
+        .scanner-container .result-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: #666;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .scanner-container .result-text {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            word-break: break-all;
+            margin-bottom: 15px;
+            font-family: 'Courier New', monospace;
+            border: 2px solid #e0e0e0;
+        }
+
+        .scanner-container .result-text a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .scanner-container .result-text a:hover {
+            text-decoration: underline;
+        }
+
+        .scanner-container .copy-btn {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #667eea;
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .scanner-container .copy-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .scanner-container .copy-btn.copied {
+            background: #10b981;
+            border-color: #10b981;
+            color: white;
+        }
+
+        .scanner-container .status {
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
-<div class="container">
+<div class="supermarket-container">
     <h1>🛒 Supermarket<br>Price Comparison</h1>
 
     <div class="table-wrapper">
@@ -153,7 +295,7 @@
                 <th style="width: 10%;">Name</th>
                 <th style="width: 15%; min-width: 70px;">Price</th>
                 <th style="width: 15%; min-width: 70px;">Quantity</th>
-                <th style="width: 35%;">Price per Unit</th>
+                <th style="width: 35%;">Price per unit</th>
                 <th style="width: 5%;"></th>
             </tr>
             </thead>
@@ -162,12 +304,39 @@
         </table>
 
         <div class="button-group">
-            <button class="add-btn" onclick="addRow()">+ Add Product</button>
+            <button class="add-btn" onclick="addRow()">+ Add</button>
         </div>
     </div>
 </div>
 
+<hr>
+
+<div class="scanner-container">
+    <div class="header">
+        <h1>📱 QR/Barcode Scanner</h1>
+        <p>Scan any QR code or barcode instantly</p>
+    </div>
+
+    <div class="content">
+        <button class="scan-btn" id="scanBtn" onclick="startScan()">Start Scanning</button>
+
+        <div id="reader"></div>
+
+        <div class="result-container" id="resultContainer">
+            <div class="result-label">Scanned Code:</div>
+            <div class="result-text" id="resultText"></div>
+            <button class="copy-btn" id="copyBtn" onclick="copyToClipboard()">📋 Copy to Clipboard</button>
+        </div>
+
+        <div class="status" id="status"></div>
+    </div>
+</div>
+
 <script>
+    //
+    // Supermarket
+    //
+
     let products = [];
 
     function addRow() {
@@ -274,6 +443,130 @@
     addRow();
     addRow();
     addRow();
+
+    //
+    // QR/Barcode Scanner
+    //
+
+    let html5QrCode;
+    let isScanning = false;
+    let scannedData = "";
+
+    function isValidUrl(string) {
+        try {
+            const url = new URL(string);
+            return url.protocol === "http:" || url.protocol === "https:";
+        }
+        catch (_) {
+            return false;
+        }
+    }
+
+    function vibrate() {
+        if ("vibrate" in navigator) {
+            navigator.vibrate(200);
+        }
+    }
+
+    async function startScan() {
+        const scanBtn = document.getElementById("scanBtn");
+        const readerDiv = document.getElementById("reader");
+        const resultContainer = document.getElementById("resultContainer");
+        const status = document.getElementById("status");
+
+        scanBtn.disabled = true;
+        scanBtn.textContent = "Scanning...";
+        readerDiv.style.display = "block";
+        resultContainer.classList.remove("active");
+        status.textContent = "Point your camera at a QR code or barcode";
+
+        html5QrCode = new Html5Qrcode("reader");
+
+        const config = {
+            fps: 10,
+            qrbox: {width: 250, height: 250},
+        };
+
+        try {
+            await html5QrCode.start(
+                {facingMode: "environment"},
+                config,
+                onScanSuccess,
+                onScanError,
+            );
+            isScanning = true;
+        }
+        catch (err) {
+            console.error("Unable to start scanning", err);
+            status.textContent = "Error: Unable to access camera";
+            scanBtn.disabled = false;
+            scanBtn.textContent = "Start Scanning";
+            readerDiv.style.display = "none";
+        }
+    }
+
+    async function onScanSuccess(decodedText, decodedResult) {
+        if (!isScanning) {
+            return;
+        }
+
+        isScanning = false;
+        scannedData = decodedText;
+
+        // Stop scanning
+        await html5QrCode.stop();
+
+        // Vibrate
+        vibrate();
+
+        // Update UI
+        const scanBtn = document.getElementById("scanBtn");
+        const resultContainer = document.getElementById("resultContainer");
+        const resultText = document.getElementById("resultText");
+        const status = document.getElementById("status");
+
+        scanBtn.disabled = false;
+        scanBtn.textContent = "Start Scanning";
+
+        // Display result
+        if (isValidUrl(decodedText)) {
+            resultText.innerHTML = `<a href="${decodedText}" target="_blank">${decodedText}</a>`;
+        }
+        else {
+            resultText.textContent = decodedText;
+        }
+
+        resultContainer.classList.add("active");
+        status.textContent = "Code scanned successfully!";
+
+        // Reset copy button
+        const copyBtn = document.getElementById("copyBtn");
+        copyBtn.textContent = "📋 Copy to Clipboard";
+        copyBtn.classList.remove("copied");
+    }
+
+    function onScanError(errorMessage) {
+        // Ignore scan errors (they happen continuously while scanning)
+    }
+
+    async function copyToClipboard() {
+        const copyBtn = document.getElementById("copyBtn");
+
+        try {
+            await navigator.clipboard.writeText(scannedData);
+            copyBtn.textContent = "✓ Copied!";
+            copyBtn.classList.add("copied");
+
+            setTimeout(() => {
+                copyBtn.textContent = "📋 Copy to Clipboard";
+                copyBtn.classList.remove("copied");
+            }, 2000);
+        }
+        catch (err) {
+            console.error("Failed to copy:", err);
+            copyBtn.textContent = "✗ Failed to copy";
+        }
+    }
 </script>
 </body>
 </html>
