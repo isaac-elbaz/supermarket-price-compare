@@ -23,135 +23,8 @@
             padding: 20px;
         }
 
-        hr {
-            margin-top: 50px;
-            border: 0;
-        }
-
-        .supermarket-container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .supermarket-container h1 {
-            text-align: center;
-            color: white;
-            margin-bottom: 30px;
-            font-size: 2em;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .supermarket-container .table-wrapper {
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            overflow-x: auto;
-        }
-
-        .supermarket-container table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .supermarket-container thead {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        .supermarket-container th {
-            padding: 15px;
-            /*text-align: left;*/
-            font-weight: 600;
-            border: none;
-        }
-
-        .supermarket-container td {
-            padding: 12px 15px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .supermarket-container input {
-            width: 100%;
-            padding: 8px;
-            border: 2px solid #ddd;
-            border-radius: 5px;
-            font-size: 14px;
-            transition: border-color 0.3s;
-        }
-
-        .supermarket-container input:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        .supermarket-container .price-per-unit {
-            color: #667eea;
-            font-weight: 600;
-            font-size: 1.1em;
-        }
-
-        .supermarket-container .gap-from-lowest-price-pct {
-            color: #cccccc;
-            font-weight: 600;
-            font-size: 1.1em;
-        }
-
-        .supermarket-container .best-price {
-            background: #d4edda !important;
-        }
-
-        .supermarket-container .best-price .price-per-unit {
-            color: #155724;
-            font-weight: bold;
-        }
-
-        .supermarket-container .remove-btn {
-            padding: 6px 0 6px 12px;
-            color: white;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        .supermarket-container .button-group {
-            margin-top: 20px;
-            display: flex;
-            gap: 10px;
-        }
-
-        .supermarket-container .add-btn {
-            width: 100%;
-            padding: 12px 0;
-            background: #667eea;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 16px;
-            transition: background 0.3s;
-        }
-
-        @media (max-width: 768px) {
-            .supermarket-container .table-wrapper {
-                padding: 15px;
-            }
-
-            .supermarket-container th, td {
-                padding: 10px 8px;
-            }
-
-            .supermarket-container th {
-                font-size: 12px;
-            }
-
-            .supermarket-container input {
-                padding: 6px;
-            }
-        }
-
-        .scanner-container {
-            max-width: 500px;
+        .container {
+            margin-bottom: 80px;
             width: 100%;
             background: white;
             border-radius: 20px;
@@ -159,28 +32,33 @@
             overflow: hidden;
         }
 
-        .scanner-container .header {
+        .header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             padding: 30px;
             text-align: center;
         }
 
-        .scanner-container .header h1 {
+        .header h1 {
             font-size: 28px;
             margin-bottom: 10px;
         }
 
-        .scanner-container .header p {
+        .header p {
             opacity: 0.9;
             font-size: 14px;
         }
 
-        .scanner-container .content {
+        .header a {
+            cursor: pointer;
+            margin-left: 5px;
+        }
+
+        .content {
             padding: 30px;
         }
 
-        .scanner-container #reader {
+        #reader {
             width: 100%;
             border-radius: 10px;
             overflow: hidden;
@@ -188,7 +66,7 @@
             display: none;
         }
 
-        .scanner-container .scan-btn {
+        .scan-btn, .add-btn {
             width: 100%;
             padding: 16px;
             font-size: 18px;
@@ -199,20 +77,20 @@
             border-radius: 10px;
             cursor: pointer;
             transition: transform 0.2s, box-shadow 0.2s;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
 
-        .scanner-container .scan-btn:hover:not(:disabled) {
+        .scan-btn:hover:not(:disabled), .add-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
         }
 
-        .scanner-container .scan-btn:disabled {
+        .scan-btn:disabled {
             opacity: 0.6;
             cursor: not-allowed;
         }
 
-        .scanner-container .result-container {
+        .result-container {
             display: none;
             background: #f8f9fa;
             border-radius: 10px;
@@ -220,11 +98,11 @@
             margin-top: 20px;
         }
 
-        .scanner-container .result-container.active {
+        .result-container.active {
             display: block;
         }
 
-        .scanner-container .result-label {
+        .result-label {
             font-size: 12px;
             text-transform: uppercase;
             color: #666;
@@ -232,7 +110,7 @@
             font-weight: 600;
         }
 
-        .scanner-container .result-text {
+        .result-text {
             background: white;
             padding: 15px;
             border-radius: 8px;
@@ -242,17 +120,17 @@
             border: 2px solid #e0e0e0;
         }
 
-        .scanner-container .result-text a {
+        .result-text a {
             color: #667eea;
             text-decoration: none;
             font-weight: 600;
         }
 
-        .scanner-container .result-text a:hover {
+        .result-text a:hover {
             text-decoration: underline;
         }
 
-        .scanner-container .copy-btn {
+        .copy-btn {
             width: 100%;
             padding: 12px;
             font-size: 16px;
@@ -265,56 +143,136 @@
             transition: all 0.2s;
         }
 
-        .scanner-container .copy-btn:hover {
+        .copy-btn:hover {
             background: #667eea;
             color: white;
         }
 
-        .scanner-container .copy-btn.copied {
+        .copy-btn.copied {
             background: #10b981;
             border-color: #10b981;
             color: white;
         }
 
-        .scanner-container .status {
+        .status {
             text-align: center;
             color: #666;
             font-size: 14px;
             margin-top: 10px;
         }
+
+        .table-wrapper {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        th {
+            padding: 15px;
+            font-weight: 600;
+            border: none;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .price-per-unit {
+            color: #667eea;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        .gap-from-lowest-price-pct {
+            color: #cccccc;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        .best-price {
+            background: #d4edda !important;
+        }
+
+        .best-price .price-per-unit {
+            color: #155724;
+            font-weight: bold;
+        }
+
+        .remove-btn {
+            padding: 6px 0 6px 12px;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .button-group {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .table-wrapper {
+                padding: 15px;
+            }
+
+            th, td {
+                padding: 10px 8px;
+            }
+
+            th {
+                font-size: 12px;
+            }
+
+            input {
+                padding: 6px;
+            }
+        }
     </style>
 </head>
 <body>
-<div class="supermarket-container">
-    <h1>🛒 Supermarket<br>Price Comparison</h1>
 
-    <div class="table-wrapper">
-        <table>
-            <thead>
-            <tr>
-                <th style="width: 10%;">Name</th>
-                <th style="width: 15%; min-width: 70px;">Price</th>
-                <th style="width: 15%; min-width: 70px;">Quantity</th>
-                <th style="width: 35%;">Price per unit</th>
-                <th style="width: 5%;"></th>
-            </tr>
-            </thead>
-            <tbody id="tableBody">
-            </tbody>
-        </table>
-
-        <div class="button-group">
-            <button class="add-btn" onclick="addRow()">+ Add</button>
-        </div>
-    </div>
-</div>
-
-<hr>
-
-<div class="scanner-container">
+<div class="container" style="max-width: 500px">
     <div class="header">
-        <h1>📱 QR/Barcode Scanner</h1>
-        <p>Scan any QR code or barcode instantly</p>
+        <svg width="64px" height="64px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M9.75 5.25H5.25V9.75H9.75V5.25ZM3.75 3.75V11.25H11.25V3.75H3.75ZM9.75 14.25H5.25V18.75H9.75V14.25ZM3.75 12.75V20.25H11.25V12.75H3.75ZM14.25 5.25H18.75V9.75H14.25V5.25ZM12.75 11.25V3.75H20.25V11.25H12.75ZM12.75 17.25V12.75H14.25V17.25H12.75ZM6.75 6.75V8.25H8.25V6.75H6.75ZM6.75 17.25V15.75H8.25V17.25H6.75ZM15.75 6.75V8.25H17.25V6.75H15.75ZM18.75 20.25V18H20.25V20.25H18.75ZM18.75 12.75V15H17.25V12.75H15.75V18.75H12.75V20.25H17.25V16.5H20.25V15V12.75H18.75Z"
+                  fill="#080341"/>
+        </svg>
+        <h1>QR code Scanner</h1>
+        <p>
+            Scan any QR code or barcode instantly
+            <a onclick="refresh()">⟳</a>
+            <a onclick="newTab()">+</a>
+        </p>
     </div>
 
     <div class="content">
@@ -332,120 +290,51 @@
     </div>
 </div>
 
+<div class="container" style="max-width: 800px">
+    <div class="header">
+        <h1>🛒<br>Supermarket Price Comparison</h1>
+        <p>
+            Find out which is the cheapest with ease
+            <a onclick="refresh()">⟳</a>
+            <a onclick="newTab()">+</a>
+        </p>
+    </div>
+
+    <div class="content">
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                <tr>
+                    <th style="width: 10%;">Name</th>
+                    <th style="width: 15%; min-width: 70px;">Price</th>
+                    <th style="width: 15%; min-width: 70px;">Quantity</th>
+                    <th style="width: 35%;">Price per unit</th>
+                    <th style="width: 5%;"></th>
+                </tr>
+                </thead>
+                <tbody id="tableBody">
+                </tbody>
+            </table>
+
+            <div class="button-group">
+                <button class="add-btn" onclick="addRow()">+ Add</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
-    //
-    // Supermarket
-    //
-
-    let products = [];
-
-    function addRow() {
-        const letter = String.fromCharCode("a".charCodeAt(0) + products.length); // a, b, c, etc.
-        products.push({
-            id: Date.now() + getRandomIntInclusive(1, 1000),
-            name: letter,
-            price: "",
-            quantity: "",
-        });
-        renderTable();
+    function refresh() {
+        window.location.reload();
     }
 
-    function getRandomIntInclusive(min, max) {
-        min = Math.ceil(min); // Ensure min is an integer, rounding up if necessary
-        max = Math.floor(max); // Ensure max is an integer, rounding down if necessary
-        return Math.floor(Math.random() * (max - min + 1)) + min;
+    function newTab() {
+        const currentUrl = window.location.href; // Get the current URL
+        window.open(currentUrl, "_blank"); // Open the current URL in a new tab
     }
-
-    function removeRow(id) {
-        products = products.filter(p => p.id !== id);
-        renderTable();
-    }
-
-    function updateProduct(id, field, value) {
-        const product = products.find(p => p.id === id);
-        if (product) {
-            product[field] = value;
-            renderTable();
-        }
-    }
-
-    function toInt(value) {
-        if (!value) {
-            return 0;
-        }
-        return Math.round(parseFloat(value) * 100);
-    }
-
-    function calcPricePerUnit(price, quantity) {
-        if (!price || !quantity) {
-            return 0;
-        }
-        return Math.round((price / quantity) * 100);
-    }
-
-    function renderTable() {
-        const tbody = document.getElementById("tableBody");
-
-        // Find lowest price per unit for highlighting (only valid products)
-        let lowestPricePerUnit = Math.round(Number.MAX_VALUE);
-        let count = 0;
-
-        products.forEach(product => {
-            const price = toInt(product.price);
-            const quantity = toInt(product.quantity);
-            // Only consider products with valid price AND quantity
-            if (price > 0 && quantity > 0) {
-                lowestPricePerUnit = Math.min(lowestPricePerUnit, calcPricePerUnit(price, quantity));
-                count++;
-            }
-        });
-        const moreThanOne = count > 1;
-
-        tbody.innerHTML = products.map(product => {
-            const price = toInt(product.price);
-            const quantity = toInt(product.quantity);
-            const pricePerUnit = calcPricePerUnit(price, quantity);
-            const isLowest = pricePerUnit && moreThanOne > 0 && pricePerUnit === lowestPricePerUnit;
-            const pricePerUnitStr = pricePerUnit ? (pricePerUnit / 100).toFixed(2) : "";
-            const gapFromLowestPricePctStr = pricePerUnit && moreThanOne && !isLowest
-                ? " (+" + Math.round(((((pricePerUnit - lowestPricePerUnit) / lowestPricePerUnit) * 100))) + "%)"
-                : "";
-            return `
-                    <tr ${moreThanOne && isLowest ? "class=\"best-price\"" : ""}>
-                        <td>
-                            <input type="text" value="${product.name}"
-                                   onchange="updateProduct(${product.id}, 'name', this.value)"
-                                   placeholder="Product name">
-                        </td>
-                        <td>
-                            <input type="number" value="${product.price}"
-                                   onchange="updateProduct(${product.id}, 'price', this.value)"
-                                   placeholder="0.00" min="0">
-                        </td>
-                        <td>
-                            <input type="number" value="${product.quantity}"
-                                   onchange="updateProduct(${product.id}, 'quantity', this.value)"
-                                   placeholder="0" min="0">
-                        </td>
-                        <td>
-                            <span class="price-per-unit">${pricePerUnitStr}</span>
-                            <span class="gap-from-lowest-price-pct">${gapFromLowestPricePctStr}</span>
-                        </td>
-                        <td class="remove-btn" onclick="removeRow(${product.id})">
-                            🗑️
-                        </td>
-                    </tr>
-                `;
-        }).join("");
-    }
-
-    // Initialize with 3 empty rows
-    addRow();
-    addRow();
-    addRow();
 
     //
-    // QR/Barcode Scanner
+    // QR code Scanner
     //
 
     let html5QrCode;
@@ -567,6 +456,117 @@
             copyBtn.textContent = "✗ Failed to copy";
         }
     }
+
+    //
+    // Supermarket
+    //
+
+    let products = [];
+
+    function addRow() {
+        const letter = String.fromCharCode("a".charCodeAt(0) + products.length); // a, b, c, etc.
+        products.push({
+            id: Date.now() + getRandomIntInclusive(1, 1000),
+            name: letter,
+            price: "",
+            quantity: "",
+        });
+        renderTable();
+    }
+
+    function getRandomIntInclusive(min, max) {
+        min = Math.ceil(min); // Ensure min is an integer, rounding up if necessary
+        max = Math.floor(max); // Ensure max is an integer, rounding down if necessary
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function removeRow(id) {
+        products = products.filter(p => p.id !== id);
+        renderTable();
+    }
+
+    function updateProduct(id, field, value) {
+        const product = products.find(p => p.id === id);
+        if (product) {
+            product[field] = value;
+            renderTable();
+        }
+    }
+
+    function toInt(value) {
+        if (!value) {
+            return 0;
+        }
+        return Math.round(parseFloat(value) * 100);
+    }
+
+    function calcPricePerUnit(price, quantity) {
+        if (!price || !quantity) {
+            return 0;
+        }
+        return Math.round((price / quantity) * 100);
+    }
+
+    function renderTable() {
+        const tbody = document.getElementById("tableBody");
+
+        // Find lowest price per unit for highlighting (only valid products)
+        let lowestPricePerUnit = Math.round(Number.MAX_VALUE);
+        let count = 0;
+
+        products.forEach(product => {
+            const price = toInt(product.price);
+            const quantity = toInt(product.quantity);
+            // Only consider products with valid price AND quantity
+            if (price > 0 && quantity > 0) {
+                lowestPricePerUnit = Math.min(lowestPricePerUnit, calcPricePerUnit(price, quantity));
+                count++;
+            }
+        });
+        const moreThanOne = count > 1;
+
+        tbody.innerHTML = products.map(product => {
+            const price = toInt(product.price);
+            const quantity = toInt(product.quantity);
+            const pricePerUnit = calcPricePerUnit(price, quantity);
+            const isLowest = pricePerUnit && moreThanOne > 0 && pricePerUnit === lowestPricePerUnit;
+            const pricePerUnitStr = pricePerUnit ? (pricePerUnit / 100).toFixed(2) : "";
+            const gapFromLowestPricePctStr = pricePerUnit && moreThanOne && !isLowest
+                ? " (+" + Math.round(((((pricePerUnit - lowestPricePerUnit) / lowestPricePerUnit) * 100))) + "%)"
+                : "";
+            return `
+                    <tr ${moreThanOne && isLowest ? "class=\"best-price\"" : ""}>
+                        <td>
+                            <input type="text" value="${product.name}"
+                                   onchange="updateProduct(${product.id}, 'name', this.value)"
+                                   placeholder="Product name">
+                        </td>
+                        <td>
+                            <input type="number" value="${product.price}"
+                                   onchange="updateProduct(${product.id}, 'price', this.value)"
+                                   placeholder="0.00" min="0">
+                        </td>
+                        <td>
+                            <input type="number" value="${product.quantity}"
+                                   onchange="updateProduct(${product.id}, 'quantity', this.value)"
+                                   placeholder="0" min="0">
+                        </td>
+                        <td>
+                            <span class="price-per-unit">${pricePerUnitStr}</span>
+                            <span class="gap-from-lowest-price-pct">${gapFromLowestPricePctStr}</span>
+                        </td>
+                        <td class="remove-btn" onclick="removeRow(${product.id})">
+                            🗑️
+                        </td>
+                    </tr>
+                `;
+        }).join("");
+    }
+
+    // Initialize with 3 empty rows
+    addRow();
+    addRow();
+    addRow();
 </script>
 </body>
 </html>
