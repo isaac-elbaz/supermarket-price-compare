@@ -29,7 +29,7 @@
             background: white;
             border-radius: 20px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
+            overflow-x: auto;
         }
 
         .header {
@@ -37,6 +37,7 @@
             color: white;
             padding: 30px;
             text-align: center;
+            cursor: pointer;
         }
 
         .header h1 {
@@ -49,13 +50,8 @@
             font-size: 14px;
         }
 
-        .header a {
-            cursor: pointer;
-            margin-left: 5px;
-        }
-
         .content {
-            padding: 30px;
+            padding: 20px;
         }
 
         #reader {
@@ -161,14 +157,6 @@
             margin-top: 10px;
         }
 
-        .table-wrapper {
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            overflow-x: auto;
-        }
-
         table {
             width: 100%;
             border-collapse: collapse;
@@ -260,7 +248,7 @@
 <body>
 
 <div class="container" style="max-width: 500px">
-    <div class="header">
+    <div class="header" onclick="refresh()">
         <svg width="64px" height="64px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd"
                   clip-rule="evenodd"
@@ -268,11 +256,7 @@
                   fill="#080341"/>
         </svg>
         <h1>QR code Scanner</h1>
-        <p>
-            Scan any QR code or barcode instantly
-            <a onclick="refresh()">⟳</a>
-            <a onclick="newTab()">+</a>
-        </p>
+        <p>Scan any QR code or barcode instantly</p>
     </div>
 
     <div class="content">
@@ -291,34 +275,28 @@
 </div>
 
 <div class="container" style="max-width: 800px">
-    <div class="header">
-        <h1>🛒<br>Supermarket Price Comparison</h1>
-        <p>
-            Find out which is the cheapest with ease
-            <a onclick="refresh()">⟳</a>
-            <a onclick="newTab()">+</a>
-        </p>
+    <div class="header" onclick="newTab()">
+        <h1 onclick="newTab()">🛒<br>Price Comparison</h1>
+        <p> Find out which is the cheapest with ease</p>
     </div>
 
     <div class="content">
-        <div class="table-wrapper">
-            <table>
-                <thead>
-                <tr>
-                    <th style="width: 10%;">Name</th>
-                    <th style="width: 15%; min-width: 70px;">Price</th>
-                    <th style="width: 15%; min-width: 70px;">Quantity</th>
-                    <th style="width: 35%;">Price per unit</th>
-                    <th style="width: 5%;"></th>
-                </tr>
-                </thead>
-                <tbody id="tableBody">
-                </tbody>
-            </table>
+        <table>
+            <thead>
+            <tr>
+                <th style="width: 10%;">Name</th>
+                <th style="width: 15%; min-width: 70px;">Price</th>
+                <th style="width: 15%; min-width: 70px;">Quantity</th>
+                <th style="width: 35%;">Price per unit</th>
+                <th style="width: 5%;"></th>
+            </tr>
+            </thead>
+            <tbody id="tableBody">
+            </tbody>
+        </table>
 
-            <div class="button-group">
-                <button class="add-btn" onclick="addRow()">+ Add</button>
-            </div>
+        <div class="button-group">
+            <button class="add-btn" onclick="addRow()">+ Add</button>
         </div>
     </div>
 </div>
