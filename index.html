@@ -192,16 +192,18 @@
             border-color: #667eea;
         }
 
-        .price-per-unit {
-            color: #667eea;
-            font-weight: 600;
+        .price-per-unit-cell {
+            text-align: center;
             font-size: 1.1em;
+            font-weight: 600;
         }
 
-        .gap-from-lowest-price-pct {
+        .price-per-unit {
+            color: #667eea;
+        }
+
+        .gap-percent {
             color: #cccccc;
-            font-weight: 600;
-            font-size: 1.1em;
         }
 
         .best-price {
@@ -213,7 +215,7 @@
             font-weight: bold;
         }
 
-        .remove-btn {
+        .remove-btn-cell {
             padding: 6px 0 6px 12px;
             color: white;
             cursor: pointer;
@@ -291,8 +293,7 @@
                 <th style="width: 5%;"></th>
             </tr>
             </thead>
-            <tbody id="tableBody">
-            </tbody>
+            <tbody id="tableBody"></tbody>
         </table>
 
         <div class="button-group">
@@ -442,32 +443,65 @@
     let products = [];
 
     function addRow() {
-        const letter = String.fromCharCode("a".charCodeAt(0) + products.length); // a, b, c, etc.
-        products.push({
+        const letter = String.fromCharCode("a".charCodeAt(0) + products.length);
+        const product = {
             id: Date.now() + getRandomIntInclusive(1, 1000),
             name: letter,
             price: "",
             quantity: "",
-        });
-        renderTable();
+        };
+        products.push(product);
+
+        const tbody = document.getElementById("tableBody");
+        const tr = document.createElement("tr");
+        tr.id = `row-${product.id}`;
+        tr.innerHTML = `
+            <td>
+                <input type="text" value="${product.name}"
+                       onchange="updateProduct(${product.id}, 'name', this.value)"
+                       placeholder="Product name"
+                       tabindex="-1">
+            </td>
+            <td>
+                <input type="number" value="${product.price}"
+                       oninput="updateProduct(${product.id}, 'price', this.value)"
+                       placeholder="0.00" min="0">
+            </td>
+            <td>
+                <input type="number" value="${product.quantity}"
+                       oninput="updateProduct(${product.id}, 'quantity', this.value)"
+                       placeholder="0" min="0">
+            </td>
+            <td class="price-per-unit-cell">
+                <span class="price-per-unit"></span>
+                &nbsp;
+                <span class="gap-percent"></span>
+            </td>
+            <td class="remove-btn-cell" onclick="removeRow(${product.id})">
+                🗑️
+            </td>
+        `;
+        tbody.appendChild(tr);
+        updateAllPriceHighlights();
     }
 
     function getRandomIntInclusive(min, max) {
-        min = Math.ceil(min); // Ensure min is an integer, rounding up if necessary
-        max = Math.floor(max); // Ensure max is an integer, rounding down if necessary
+        min = Math.ceil(min);
+        max = Math.floor(max);
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
     function removeRow(id) {
         products = products.filter(p => p.id !== id);
-        renderTable();
+        document.getElementById(`row-${id}`).remove();
+        updateAllPriceHighlights();
     }
 
     function updateProduct(id, field, value) {
         const product = products.find(p => p.id === id);
         if (product) {
             product[field] = value;
-            renderTable();
+            updateAllPriceHighlights();
         }
     }
 
@@ -485,9 +519,7 @@
         return Math.round((price / quantity) * 100);
     }
 
-    function renderTable() {
-        const tbody = document.getElementById("tableBody");
-
+    function updateAllPriceHighlights() {
         // Find lowest price per unit for highlighting (only valid products)
         let lowestPricePerUnit = Math.round(Number.MAX_VALUE);
         let count = 0;
@@ -503,42 +535,40 @@
         });
         const moreThanOne = count > 1;
 
-        tbody.innerHTML = products.map(product => {
+        // Update each row
+        products.forEach(product => {
+            const row = document.getElementById(`row-${product.id}`);
+            if (!row) {
+                return;
+            }
+
             const price = toInt(product.price);
             const quantity = toInt(product.quantity);
             const pricePerUnit = calcPricePerUnit(price, quantity);
-            const isLowest = pricePerUnit && moreThanOne > 0 && pricePerUnit === lowestPricePerUnit;
-            const pricePerUnitStr = pricePerUnit ? (pricePerUnit / 100).toFixed(2) : "";
-            const gapFromLowestPricePctStr = pricePerUnit && moreThanOne && !isLowest
-                ? " (+" + Math.round(((((pricePerUnit - lowestPricePerUnit) / lowestPricePerUnit) * 100))) + "%)"
-                : "";
-            return `
-                    <tr ${moreThanOne && isLowest ? "class=\"best-price\"" : ""}>
-                        <td>
-                            <input type="text" value="${product.name}"
-                                   onchange="updateProduct(${product.id}, 'name', this.value)"
-                                   placeholder="Product name">
-                        </td>
-                        <td>
-                            <input type="number" value="${product.price}"
-                                   onchange="updateProduct(${product.id}, 'price', this.value)"
-                                   placeholder="0.00" min="0">
-                        </td>
-                        <td>
-                            <input type="number" value="${product.quantity}"
-                                   onchange="updateProduct(${product.id}, 'quantity', this.value)"
-                                   placeholder="0" min="0">
-                        </td>
-                        <td>
-                            <span class="price-per-unit">${pricePerUnitStr}</span>
-                            <span class="gap-from-lowest-price-pct">${gapFromLowestPricePctStr}</span>
-                        </td>
-                        <td class="remove-btn" onclick="removeRow(${product.id})">
-                            🗑️
-                        </td>
-                    </tr>
-                `;
-        }).join("");
+            const lowest = pricePerUnit && moreThanOne && pricePerUnit === lowestPricePerUnit;
+
+            // Update price per unit text
+            const pricePerUnitSpan = row.querySelector(".price-per-unit");
+            const gapPercentSpan = row.querySelector(".gap-percent");
+
+            pricePerUnitSpan.textContent = pricePerUnit ? (pricePerUnit / 100).toFixed(2) : "";
+
+            if (pricePerUnit && moreThanOne && !lowest) {
+                const gapPercent = Math.round(((pricePerUnit - lowestPricePerUnit) / lowestPricePerUnit) * 100);
+                gapPercentSpan.textContent = `(+${gapPercent}%)`;
+            }
+            else {
+                gapPercentSpan.textContent = "";
+            }
+
+            // Update highlighting
+            if (moreThanOne && lowest) {
+                row.classList.add("best-price");
+            }
+            else {
+                row.classList.remove("best-price");
+            }
+        });
     }
 
     // Initialize with 3 empty rows
