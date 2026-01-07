@@ -220,7 +220,7 @@
 
         .remove-btn-cell {
             padding: 0;
-            font-size: 0.6rem;
+            color: #ddd;
             text-align: center;
             cursor: pointer;
         }
@@ -253,7 +253,7 @@
 </head>
 <body>
 
-<div class="container" style="max-width: 500px">
+<div class="container" style="max-width: 500px;">
     <div class="header" onclick="refresh()">
         <svg width="64px" height="64px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd"
@@ -262,7 +262,7 @@
                   fill="#080341"/>
         </svg>
         <h1>QR code Scanner</h1>
-        <p>Scan any QR code or barcode instantly</p>
+        <p>Scan any QR code or Barcode instantly</p>
     </div>
 
     <div class="content">
@@ -280,9 +280,10 @@
     </div>
 </div>
 
-<div class="container" style="max-width: 800px">
+<div class="container" style="max-width: 800px;">
     <div class="header" onclick="newTab()">
-        <h1 onclick="newTab()">🛒<br>Price Comparison</h1>
+        <div style="font-size: 3.6rem;">🛒</div>
+        <h1>Price Comparison</h1>
         <p>Find out which is the cheapest with ease</p>
     </div>
 
@@ -461,7 +462,7 @@
         tr.id = `row-${product.id}`;
         tr.innerHTML = `
             <td class="remove-btn-cell" onclick="removeRow(${product.id})">
-                ❌
+                ✗
             </td>
             <td>
                 <input type="text" value="${product.name}"
