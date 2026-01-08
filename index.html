@@ -55,6 +55,100 @@
             padding: 25px;
         }
 
+        /* Supermarket */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        th {
+            padding: 15px 0;
+            font-weight: 600;
+            border: none;
+        }
+
+        td {
+            padding: 12px 3px;
+            line-height: 20px;
+            border-bottom: 1px solid #eee;
+            text-align: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 0.875rem;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .price-per-unit-cell {
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .price-per-unit {
+            color: #667eea;
+        }
+
+        .gap-percent {
+            color: #cccccc;
+        }
+
+        .best-price {
+            background: #d4edda !important;
+        }
+
+        .best-price .price-per-unit {
+            color: #155724;
+            font-weight: bold;
+        }
+
+        .remove-btn-cell {
+            padding: 0;
+            color: #ddd;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .button-group {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 15px;
+            }
+
+            th {
+                font-size: 0.75rem;
+                padding: 10px 0;
+            }
+
+            td {
+                padding: 10px 3px;
+            }
+
+            input {
+                padding: 6px;
+            }
+        }
+
+        /* QR code Scanner */
         #reader {
             width: 100%;
             border-radius: 10px;
@@ -157,129 +251,11 @@
             font-size: 0.875rem;
             margin-top: 10px;
         }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        thead {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        th {
-            padding: 15px 0;
-            font-weight: 600;
-            border: none;
-        }
-
-        td {
-            padding: 12px 3px;
-            line-height: 20px;
-            border-bottom: 1px solid #eee;
-            text-align: center;
-        }
-
-        input {
-            width: 100%;
-            padding: 8px;
-            border: 2px solid #ddd;
-            border-radius: 5px;
-            font-size: 0.875rem;
-            transition: border-color 0.3s;
-        }
-
-        input:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        .price-per-unit-cell {
-            text-align: center;
-            font-size: 1.1rem;
-            font-weight: 600;
-        }
-
-        .price-per-unit {
-            color: #667eea;
-        }
-
-        .gap-percent {
-            color: #cccccc;
-        }
-
-        .best-price {
-            background: #d4edda !important;
-        }
-
-        .best-price .price-per-unit {
-            color: #155724;
-            font-weight: bold;
-        }
-
-        .remove-btn-cell {
-            padding: 0;
-            color: #ddd;
-            text-align: center;
-            cursor: pointer;
-        }
-
-        .button-group {
-            margin-top: 20px;
-            display: flex;
-            gap: 10px;
-        }
-
-        @media (max-width: 768px) {
-            .content {
-                padding: 15px;
-            }
-
-            th {
-                font-size: 0.75rem;
-                padding: 10px 0;
-            }
-
-            td {
-                padding: 10px 3px;
-            }
-
-            input {
-                padding: 6px;
-            }
-        }
     </style>
 </head>
 <body>
 
-<div class="container" style="max-width: 500px;">
-    <div class="header" onclick="refresh()">
-        <svg width="64px" height="64px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd"
-                  clip-rule="evenodd"
-                  d="M9.75 5.25H5.25V9.75H9.75V5.25ZM3.75 3.75V11.25H11.25V3.75H3.75ZM9.75 14.25H5.25V18.75H9.75V14.25ZM3.75 12.75V20.25H11.25V12.75H3.75ZM14.25 5.25H18.75V9.75H14.25V5.25ZM12.75 11.25V3.75H20.25V11.25H12.75ZM12.75 17.25V12.75H14.25V17.25H12.75ZM6.75 6.75V8.25H8.25V6.75H6.75ZM6.75 17.25V15.75H8.25V17.25H6.75ZM15.75 6.75V8.25H17.25V6.75H15.75ZM18.75 20.25V18H20.25V20.25H18.75ZM18.75 12.75V15H17.25V12.75H15.75V18.75H12.75V20.25H17.25V16.5H20.25V15V12.75H18.75Z"
-                  fill="#080341"/>
-        </svg>
-        <h1>QR code Scanner</h1>
-        <p>Scan any QR code or Barcode instantly</p>
-    </div>
-
-    <div class="content">
-        <button class="scan-btn" id="scanBtn" onclick="startScan()">Start Scanning</button>
-
-        <div id="reader"></div>
-
-        <div class="result-container" id="resultContainer">
-            <div class="result-label">Scanned Code:</div>
-            <div class="result-text" id="resultText"></div>
-            <button class="copy-btn" id="copyBtn" onclick="copyToClipboard()">📋 Copy to Clipboard</button>
-        </div>
-
-        <div class="status" id="status"></div>
-    </div>
-</div>
-
+<!-- Supermarket -->
 <div class="container" style="max-width: 800px;">
     <div class="header" onclick="newTab()">
         <div style="font-size: 3.6rem;">🛒</div>
@@ -307,6 +283,34 @@
     </div>
 </div>
 
+<!-- QR code Scanner -->
+<div class="container" style="max-width: 500px;">
+    <div class="header" onclick="refresh()">
+        <svg width="64px" height="64px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M9.75 5.25H5.25V9.75H9.75V5.25ZM3.75 3.75V11.25H11.25V3.75H3.75ZM9.75 14.25H5.25V18.75H9.75V14.25ZM3.75 12.75V20.25H11.25V12.75H3.75ZM14.25 5.25H18.75V9.75H14.25V5.25ZM12.75 11.25V3.75H20.25V11.25H12.75ZM12.75 17.25V12.75H14.25V17.25H12.75ZM6.75 6.75V8.25H8.25V6.75H6.75ZM6.75 17.25V15.75H8.25V17.25H6.75ZM15.75 6.75V8.25H17.25V6.75H15.75ZM18.75 20.25V18H20.25V20.25H18.75ZM18.75 12.75V15H17.25V12.75H15.75V18.75H12.75V20.25H17.25V16.5H20.25V15V12.75H18.75Z"
+                  fill="#080341"/>
+        </svg>
+        <h1>QR code Scanner</h1>
+        <p>Scan any QR code or Barcode instantly</p>
+    </div>
+
+    <div class="content">
+        <button class="scan-btn" id="scanBtn" onclick="startScan()">Start Scanning</button>
+
+        <div id="reader"></div>
+
+        <div class="result-container" id="resultContainer">
+            <div class="result-label">Scanned Code:</div>
+            <div class="result-text" id="resultText"></div>
+            <button class="copy-btn" id="copyBtn" onclick="copyToClipboard()">📋 Copy to Clipboard</button>
+        </div>
+
+        <div class="status" id="status"></div>
+    </div>
+</div>
+
 <script>
     function refresh() {
         window.location.reload();
@@ -317,133 +321,7 @@
         window.open(currentUrl, "_blank"); // Open the current URL in a new tab
     }
 
-    //
-    // QR code Scanner
-    //
-
-    let html5QrCode;
-    let isScanning = false;
-    let scannedData = "";
-
-    function isValidUrl(string) {
-        try {
-            const url = new URL(string);
-            return url.protocol === "http:" || url.protocol === "https:";
-        }
-        catch (_) {
-            return false;
-        }
-    }
-
-    function vibrate() {
-        if ("vibrate" in navigator) {
-            navigator.vibrate(200);
-        }
-    }
-
-    async function startScan() {
-        const scanBtn = document.getElementById("scanBtn");
-        const readerDiv = document.getElementById("reader");
-        const resultContainer = document.getElementById("resultContainer");
-        const status = document.getElementById("status");
-
-        scanBtn.disabled = true;
-        scanBtn.textContent = "Scanning...";
-        readerDiv.style.display = "block";
-        resultContainer.classList.remove("active");
-        status.textContent = "Point your camera at a QR code or barcode";
-
-        html5QrCode = new Html5Qrcode("reader");
-
-        const config = {
-            fps: 10,
-            qrbox: {width: 250, height: 250},
-        };
-
-        try {
-            await html5QrCode.start(
-                {facingMode: "environment"},
-                config,
-                onScanSuccess,
-                onScanError,
-            );
-            isScanning = true;
-        }
-        catch (err) {
-            console.error("Unable to start scanning", err);
-            status.textContent = "Error: Unable to access camera";
-            scanBtn.disabled = false;
-            scanBtn.textContent = "Start Scanning";
-            readerDiv.style.display = "none";
-        }
-    }
-
-    async function onScanSuccess(decodedText, decodedResult) {
-        if (!isScanning) {
-            return;
-        }
-
-        isScanning = false;
-        scannedData = decodedText;
-
-        // Stop scanning
-        await html5QrCode.stop();
-
-        // Vibrate
-        vibrate();
-
-        // Update UI
-        const scanBtn = document.getElementById("scanBtn");
-        const resultContainer = document.getElementById("resultContainer");
-        const resultText = document.getElementById("resultText");
-        const status = document.getElementById("status");
-
-        scanBtn.disabled = false;
-        scanBtn.textContent = "Start Scanning";
-
-        // Display result
-        if (isValidUrl(decodedText)) {
-            resultText.innerHTML = `<a href="${decodedText}" target="_blank">${decodedText}</a>`;
-        }
-        else {
-            resultText.textContent = decodedText;
-        }
-
-        resultContainer.classList.add("active");
-        status.textContent = "Code scanned successfully!";
-
-        // Reset copy button
-        const copyBtn = document.getElementById("copyBtn");
-        copyBtn.textContent = "📋 Copy to Clipboard";
-        copyBtn.classList.remove("copied");
-    }
-
-    function onScanError(errorMessage) {
-        // Ignore scan errors (they happen continuously while scanning)
-    }
-
-    async function copyToClipboard() {
-        const copyBtn = document.getElementById("copyBtn");
-
-        try {
-            await navigator.clipboard.writeText(scannedData);
-            copyBtn.textContent = "✓ Copied!";
-            copyBtn.classList.add("copied");
-
-            setTimeout(() => {
-                copyBtn.textContent = "📋 Copy to Clipboard";
-                copyBtn.classList.remove("copied");
-            }, 2000);
-        }
-        catch (err) {
-            console.error("Failed to copy:", err);
-            copyBtn.textContent = "✗ Failed to copy";
-        }
-    }
-
-    //
     // Supermarket
-    //
 
     let products = [];
 
@@ -579,6 +457,128 @@
     addRow();
     addRow();
     addRow();
+
+    // QR code Scanner
+
+    let html5QrCode;
+    let isScanning = false;
+    let scannedData = "";
+
+    function isValidUrl(string) {
+        try {
+            const url = new URL(string);
+            return url.protocol === "http:" || url.protocol === "https:";
+        }
+        catch (_) {
+            return false;
+        }
+    }
+
+    function vibrate() {
+        if ("vibrate" in navigator) {
+            navigator.vibrate(200);
+        }
+    }
+
+    async function startScan() {
+        const scanBtn = document.getElementById("scanBtn");
+        const readerDiv = document.getElementById("reader");
+        const resultContainer = document.getElementById("resultContainer");
+        const status = document.getElementById("status");
+
+        scanBtn.disabled = true;
+        scanBtn.textContent = "Scanning...";
+        readerDiv.style.display = "block";
+        resultContainer.classList.remove("active");
+        status.textContent = "Point your camera at a QR code or barcode";
+
+        html5QrCode = new Html5Qrcode("reader");
+
+        const config = {
+            fps: 10,
+            qrbox: {width: 250, height: 250},
+        };
+
+        try {
+            await html5QrCode.start(
+                {facingMode: "environment"},
+                config,
+                onScanSuccess,
+                onScanError,
+            );
+            isScanning = true;
+            status.scrollIntoView({behavior: "smooth"});
+        }
+        catch (err) {
+            console.error("Unable to start scanning", err);
+            status.textContent = "Error: Unable to access camera";
+            scanBtn.disabled = false;
+            scanBtn.textContent = "Start Scanning";
+            readerDiv.style.display = "none";
+        }
+    }
+
+    async function onScanSuccess(decodedText, decodedResult) {
+        if (!isScanning) {
+            return;
+        }
+
+        isScanning = false;
+        scannedData = decodedText;
+
+        // Stop scanning
+        await html5QrCode.stop();
+
+        // Vibrate
+        vibrate();
+
+        // Update UI
+        const scanBtn = document.getElementById("scanBtn");
+        const resultContainer = document.getElementById("resultContainer");
+        const resultText = document.getElementById("resultText");
+        const status = document.getElementById("status");
+
+        scanBtn.disabled = false;
+        scanBtn.textContent = "Start Scanning";
+
+        // Display result
+        if (isValidUrl(decodedText)) {
+            resultText.innerHTML = `<a href="${decodedText}" target="_blank">${decodedText}</a>`;
+        }
+        else {
+            resultText.textContent = decodedText;
+        }
+
+        resultContainer.classList.add("active");
+        status.textContent = "Code scanned successfully!";
+
+        // Reset copy button
+        const copyBtn = document.getElementById("copyBtn");
+        copyBtn.textContent = "📋 Copy to Clipboard";
+        copyBtn.classList.remove("copied");
+    }
+
+    function onScanError(errorMessage) {
+        // Ignore scan errors (they happen continuously while scanning)
+    }
+
+    async function copyToClipboard() {
+        const copyBtn = document.getElementById("copyBtn");
+        try {
+            await navigator.clipboard.writeText(scannedData);
+            copyBtn.textContent = "✓ Copied!";
+            copyBtn.classList.add("copied");
+
+            setTimeout(() => {
+                copyBtn.textContent = "📋 Copy to Clipboard";
+                copyBtn.classList.remove("copied");
+            }, 2000);
+        }
+        catch (err) {
+            console.error("Failed to copy:", err);
+            copyBtn.textContent = "✗ Failed to copy";
+        }
+    }
 </script>
 </body>
 </html>
