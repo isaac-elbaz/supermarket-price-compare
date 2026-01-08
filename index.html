@@ -507,7 +507,7 @@
                 onScanError,
             );
             isScanning = true;
-            status.scrollIntoView({behavior: "smooth"});
+            status.scrollIntoView({behavior: "smooth", block: "end"});
         }
         catch (err) {
             console.error("Unable to start scanning", err);
