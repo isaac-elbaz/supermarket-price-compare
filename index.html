@@ -113,12 +113,11 @@
 
         .best-price .price-per-unit {
             color: #155724;
-            font-weight: bold;
         }
 
         .remove-btn-cell {
             padding: 0;
-            color: #ddd;
+            color: #cccccc;
             text-align: center;
             cursor: pointer;
         }
@@ -269,8 +268,8 @@
             <tr>
                 <th style="width: 2%;"></th>
                 <th style="width: 12%;">Name</th>
-                <th style="width: 23%;">Price</th>
                 <th style="width: 23%;">Quantity</th>
+                <th style="width: 23%;">Price</th>
                 <th style="width: 40%;">Price per unit</th>
             </tr>
             </thead>
@@ -330,8 +329,8 @@
         const product = {
             id: Date.now() + getRandomIntInclusive(1, 1000),
             name: letter,
-            price: "",
             quantity: "",
+            price: "",
         };
         products.push(product);
 
@@ -349,14 +348,14 @@
                        tabindex="-1">
             </td>
             <td>
-                <input type="number" value="${product.price}"
-                       oninput="updateProduct(${product.id}, 'price', this.value)"
-                       placeholder="0.00" min="0">
-            </td>
-            <td>
                 <input type="number" value="${product.quantity}"
                        oninput="updateProduct(${product.id}, 'quantity', this.value)"
                        placeholder="0" min="0">
+            </td>
+            <td>
+                <input type="number" value="${product.price}"
+                       oninput="updateProduct(${product.id}, 'price', this.value)"
+                       placeholder="0.00" min="0">
             </td>
             <td class="price-per-unit-cell">
                 <span class="price-per-unit"></span>
@@ -394,8 +393,8 @@
         return Math.round(parseFloat(value) * 100);
     }
 
-    function calcPricePerUnit(price, quantity) {
-        if (!price || !quantity) {
+    function calcPricePerUnit(quantity, price) {
+        if (!quantity || !quantity) {
             return 0;
         }
         return Math.round((price / quantity) * 100);
@@ -407,11 +406,11 @@
         let count = 0;
 
         products.forEach(product => {
-            const price = toInt(product.price);
             const quantity = toInt(product.quantity);
+            const price = toInt(product.price);
             // Only consider products with valid price AND quantity
-            if (price > 0 && quantity > 0) {
-                lowestPricePerUnit = Math.min(lowestPricePerUnit, calcPricePerUnit(price, quantity));
+            if (quantity > 0 && price > 0) {
+                lowestPricePerUnit = Math.min(lowestPricePerUnit, calcPricePerUnit(quantity, price));
                 count++;
             }
         });
@@ -424,17 +423,17 @@
                 return;
             }
 
-            const price = toInt(product.price);
             const quantity = toInt(product.quantity);
-            const pricePerUnit = calcPricePerUnit(price, quantity);
+            const price = toInt(product.price);
+            const pricePerUnit = calcPricePerUnit(quantity, price);
             const lowest = pricePerUnit && moreThanOne && pricePerUnit === lowestPricePerUnit;
 
             // Update price per unit text
             const pricePerUnitSpan = row.querySelector(".price-per-unit");
-            const gapPercentSpan = row.querySelector(".gap-percent");
-
             pricePerUnitSpan.textContent = pricePerUnit ? (pricePerUnit / 100).toFixed(2) : "";
 
+            // Update gap percen text
+            const gapPercentSpan = row.querySelector(".gap-percent");
             if (pricePerUnit && moreThanOne && !lowest) {
                 const gapPercent = Math.round(((pricePerUnit - lowestPricePerUnit) / lowestPricePerUnit) * 100);
                 gapPercentSpan.textContent = ` (+${gapPercent}%)`;
@@ -444,7 +443,7 @@
             }
 
             // Update highlighting
-            if (moreThanOne && lowest) {
+            if (lowest) {
                 row.classList.add("best-price");
             }
             else {
@@ -507,7 +506,10 @@
                 onScanError,
             );
             isScanning = true;
-            status.scrollIntoView({behavior: "smooth", block: "end"});
+
+            setTimeout(() => {
+                status.scrollIntoView({behavior: "smooth", block: "end"});
+            }, 100);
         }
         catch (err) {
             console.error("Unable to start scanning", err);
