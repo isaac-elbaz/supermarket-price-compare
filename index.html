@@ -147,6 +147,329 @@
             }
         }
 
+        /* Wheel of luck */
+
+        /*
+        ~~~
+            *   {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            display: flex;
+            gap: 30px;
+            max-width: 1400px;
+            width: 100%;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+         */
+        .wheel-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .wheel-container {
+            position: relative;
+            width: 500px;
+            height: 500px;
+        }
+
+        #wheelCanvas {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .pointer {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-top: 40px solid #ff4757;
+            z-index: 10;
+            filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.3));
+        }
+
+        .center-circle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+            color: #667eea;
+            cursor: pointer;
+            transition: transform 0.2s;
+            z-index: 5;
+        }
+
+        .center-circle:hover {
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        .center-circle:active {
+            transform: translate(-50%, -50%) scale(0.95);
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        button {
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .spin-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-size: 18px;
+            padding: 15px 40px;
+        }
+
+        .spin-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .spin-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .secondary-btn {
+            background: #f1f2f6;
+            color: #2f3542;
+        }
+
+        .secondary-btn:hover {
+            background: #dfe4ea;
+        }
+
+        .editor-section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            width: 350px;
+        }
+
+        h2 {
+            color: #2f3542;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .entry-list {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            border: 2px solid #dfe4ea;
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        .entry-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            margin-bottom: 8px;
+            background: #f1f2f6;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .entry-item:hover {
+            background: #dfe4ea;
+        }
+
+        .color-box {
+            width: 30px;
+            height: 30px;
+            border-radius: 4px;
+            border: 2px solid white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            flex-shrink: 0;
+        }
+
+        .entry-text {
+            flex: 1;
+            font-size: 14px;
+            color: #2f3542;
+        }
+
+        .remove-btn {
+            background: #ff4757;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 6px 12px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.2s;
+        }
+
+        .remove-btn:hover {
+            background: #ff3838;
+        }
+
+        .add-entry {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .add-entry input {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #dfe4ea;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .add-entry input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .add-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+
+        .add-btn:hover {
+            background: #5568d3;
+        }
+
+        .bulk-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .bulk-actions button {
+            flex: 1;
+            min-width: 100px;
+            padding: 10px;
+            font-size: 13px;
+        }
+
+        .winner-display {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: white;
+            padding: 40px 60px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            text-align: center;
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .winner-display.show {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+
+        .winner-display h3 {
+            color: #667eea;
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        .winner-display p {
+            font-size: 36px;
+            font-weight: bold;
+            color: #2f3542;
+            margin-bottom: 20px;
+        }
+
+        .winner-display button {
+            background: #667eea;
+            color: white;
+            padding: 12px 30px;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .overlay.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        @media (max-width: 768px) {
+            .wheel-container {
+                width: 350px;
+                height: 350px;
+            }
+
+            .editor-section {
+                width: 100%;
+            }
+        }
+
         /* QR code Scanner */
         #reader {
             width: 100%;
@@ -280,6 +603,42 @@
             <button class="add-btn" onclick="addRow()">+ Add</button>
         </div>
     </div>
+</div>
+
+<!-- Wheel of luck -->
+<div class="container">
+    <div class="wheel-section">
+        <div class="wheel-container">
+            <div class="pointer"></div>
+            <canvas id="wheelCanvas"></canvas>
+            <div class="center-circle" id="spinButton">SPIN</div>
+        </div>
+        <div class="controls">
+            <button class="spin-btn" id="spinBtn">Spin the Wheel</button>
+            <button class="secondary-btn" id="fullscreenBtn">Fullscreen</button>
+        </div>
+    </div>
+
+    <div class="editor-section">
+        <h2>Entries</h2>
+        <div class="add-entry">
+            <input type="text" id="entryInput" placeholder="Enter a name..."/>
+            <button class="add-btn" id="addBtn">Add</button>
+        </div>
+        <div class="entry-list" id="entryList"></div>
+        <div class="bulk-actions">
+            <button class="secondary-btn" id="clearBtn">Clear All</button>
+            <button class="secondary-btn" id="shuffleBtn">Shuffle</button>
+            <button class="secondary-btn" id="sortBtn">Sort A-Z</button>
+        </div>
+    </div>
+</div>
+
+<div class="overlay" id="overlay"></div>
+<div class="winner-display" id="winnerDisplay">
+    <h3>🎉 Winner! 🎉</h3>
+    <p id="winnerText"></p>
+    <button id="closeWinnerBtn">Close</button>
 </div>
 
 <!-- QR code Scanner -->
@@ -456,6 +815,309 @@
     addRow();
     addRow();
     addRow();
+
+    // Wheel of luck
+
+    class WheelOfLuck {
+        constructor() {
+            this.canvas = document.getElementById("wheelCanvas");
+            this.ctx = this.canvas.getContext("2d");
+            this.entries = ["רינה", "הלל", "אליאל אליהו", "מוריה", "תמר", "לביא"];
+            this.colors = [];
+            this.currentRotation = 0;
+            this.isSpinning = false;
+            this.spinVelocity = 0;
+            this.lastTime = 0;
+
+            this.generateColors();
+            this.setupCanvas();
+            this.draw();
+            this.setupEventListeners();
+            this.updateEntryList();
+        }
+
+        setupCanvas() {
+            const rect = this.canvas.getBoundingClientRect();
+            this.canvas.width = rect.width * 2;
+            this.canvas.height = rect.height * 2;
+            this.ctx.scale(2, 2);
+            this.centerX = rect.width / 2;
+            this.centerY = rect.height / 2;
+            this.radius = Math.min(this.centerX, this.centerY) - 10;
+        }
+
+        generateColors() {
+            const hues = [0, 30, 60, 120, 180, 210, 270, 300, 330];
+            this.colors = this.entries.map((_, i) => {
+                const hue = hues[i % hues.length];
+                const saturation = 70 + Math.random() * 20;
+                const lightness = 50 + Math.random() * 15;
+                return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+            });
+        }
+
+        draw() {
+            const rect = this.canvas.getBoundingClientRect();
+            this.ctx.clearRect(0, 0, rect.width, rect.height);
+
+            if (this.entries.length === 0) {
+                this.ctx.fillStyle = "#f1f2f6";
+                this.ctx.beginPath();
+                this.ctx.arc(this.centerX, this.centerY, this.radius, 0, 2 * Math.PI);
+                this.ctx.fill();
+
+                this.ctx.fillStyle = "#2f3542";
+                this.ctx.font = "bold 20px Arial";
+                this.ctx.textAlign = "center";
+                this.ctx.textBaseline = "middle";
+                this.ctx.fillText("Add entries to start", this.centerX, this.centerY);
+                return;
+            }
+
+            const anglePerEntry = (2 * Math.PI) / this.entries.length;
+
+            this.entries.forEach((entry, i) => {
+                const startAngle = this.currentRotation + i * anglePerEntry;
+                const endAngle = startAngle + anglePerEntry;
+
+                // Draw slice
+                this.ctx.fillStyle = this.colors[i];
+                this.ctx.beginPath();
+                this.ctx.moveTo(this.centerX, this.centerY);
+                this.ctx.arc(this.centerX, this.centerY, this.radius, startAngle, endAngle);
+                this.ctx.closePath();
+                this.ctx.fill();
+
+                // Draw border
+                this.ctx.strokeStyle = "white";
+                this.ctx.lineWidth = 3;
+                this.ctx.stroke();
+
+                // Draw text
+                this.ctx.save();
+                this.ctx.translate(this.centerX, this.centerY);
+                this.ctx.rotate(startAngle + anglePerEntry / 2);
+                this.ctx.textAlign = "left";
+                this.ctx.textBaseline = "middle";
+                this.ctx.fillStyle = "white";
+                this.ctx.font = "bold 16px Arial";
+                this.ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
+                this.ctx.shadowBlur = 4;
+                this.ctx.shadowOffsetX = 2;
+                this.ctx.shadowOffsetY = 2;
+
+                const textX = this.radius * 0.3;
+                const maxWidth = this.radius * 0.5;
+                const text = entry.length > 15 ? entry.substring(0, 15) + "..." : entry;
+                this.ctx.fillText(text, textX, 0, maxWidth);
+
+                this.ctx.restore();
+            });
+        }
+
+        spin() {
+            if (this.isSpinning || this.entries.length === 0) {
+                return;
+            }
+
+            this.isSpinning = true;
+            // Slower initial velocity and more rotations for dramatic effect
+            const baseSpins = 8 + Math.floor(Math.random() * 4); // 8-11 full rotations
+            const randomOffset = Math.random() * 2 * Math.PI; // Random final position
+            this.totalRotation = baseSpins * 2 * Math.PI + randomOffset;
+            this.startRotation = this.currentRotation;
+            this.spinStartTime = Date.now();
+            this.spinDuration = 8000 + Math.random() * 2000; // 8-10 seconds (was 5-7)
+
+            this.lastTime = Date.now();
+            this.animateSpin();
+
+            document.getElementById("spinBtn").disabled = true;
+            document.getElementById("spinButton").style.pointerEvents = "none";
+        }
+
+        animateSpin() {
+            if (!this.isSpinning) {
+                return;
+            }
+
+            const currentTime = Date.now();
+            const elapsed = currentTime - this.spinStartTime;
+            const progress = Math.min(elapsed / this.spinDuration, 1);
+
+            // Easing function - starts fast, slows down smoothly (ease-out cubic)
+            const easeOut = 1 - Math.pow(1 - progress, 3);
+
+            // Update rotation based on easing
+            this.currentRotation = this.startRotation + this.totalRotation * easeOut;
+            this.currentRotation %= (2 * Math.PI);
+
+            this.draw();
+
+            if (progress < 1) {
+                requestAnimationFrame(() => this.animateSpin());
+            }
+            else {
+                this.isSpinning = false;
+                this.showWinner();
+                document.getElementById("spinBtn").disabled = false;
+                document.getElementById("spinButton").style.pointerEvents = "all";
+            }
+        }
+
+        showWinner() {
+            const anglePerEntry = (2 * Math.PI) / this.entries.length;
+
+            // The pointer is at the top (270 degrees in standard coordinates)
+            // Our slices start at currentRotation and go clockwise
+            // We need to find which slice's range includes the top position
+
+            // Normalize current rotation to 0-2π
+            let normalizedRotation = this.currentRotation % (2 * Math.PI);
+            if (normalizedRotation < 0) {
+                normalizedRotation += 2 * Math.PI;
+            }
+
+            // The pointer is at 3π/2 (270 degrees, pointing down from top)
+            // Find which slice this falls into
+            const pointerAngle = 3 * Math.PI / 2;
+
+            // Calculate the relative angle from the start of the wheel
+            let relativeAngle = (pointerAngle - normalizedRotation) % (2 * Math.PI);
+            if (relativeAngle < 0) {
+                relativeAngle += 2 * Math.PI;
+            }
+
+            // Find which entry this angle corresponds to
+            const winnerIndex = Math.floor(relativeAngle / anglePerEntry) % this.entries.length;
+            const winner = this.entries[winnerIndex];
+
+            console.log("Rotation:", normalizedRotation, "Relative:", relativeAngle, "Index:", winnerIndex, "Winner:", winner);
+
+            document.getElementById("winnerText").textContent = winner;
+            document.getElementById("overlay").classList.add("show");
+            document.getElementById("winnerDisplay").classList.add("show");
+        }
+
+        addEntry(name) {
+            if (name && name.trim()) {
+                this.entries.push(name.trim());
+                this.generateColors();
+                this.draw();
+                this.updateEntryList();
+            }
+        }
+
+        removeEntry(index) {
+            this.entries.splice(index, 1);
+            this.generateColors();
+            this.draw();
+            this.updateEntryList();
+        }
+
+        clearAll() {
+            if (confirm("Are you sure you want to clear all entries?")) {
+                this.entries = [];
+                this.colors = [];
+                this.draw();
+                this.updateEntryList();
+            }
+        }
+
+        shuffle() {
+            for (let i = this.entries.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [this.entries[i], this.entries[j]] = [this.entries[j], this.entries[i]];
+            }
+            this.generateColors();
+            this.draw();
+            this.updateEntryList();
+        }
+
+        sort() {
+            this.entries.sort((a, b) => a.localeCompare(b));
+            this.generateColors();
+            this.draw();
+            this.updateEntryList();
+        }
+
+        updateEntryList() {
+            const list = document.getElementById("entryList");
+            list.innerHTML = "";
+
+            this.entries.forEach((entry, index) => {
+                const item = document.createElement("div");
+                item.className = "entry-item";
+
+                const colorBox = document.createElement("div");
+                colorBox.className = "color-box";
+                colorBox.style.backgroundColor = this.colors[index];
+
+                const text = document.createElement("div");
+                text.className = "entry-text";
+                text.textContent = entry;
+
+                const removeBtn = document.createElement("button");
+                removeBtn.className = "remove-btn";
+                removeBtn.textContent = "Remove";
+                removeBtn.onclick = () => this.removeEntry(index);
+
+                item.appendChild(colorBox);
+                item.appendChild(text);
+                item.appendChild(removeBtn);
+                list.appendChild(item);
+            });
+        }
+
+        setupEventListeners() {
+            document.getElementById("spinBtn").addEventListener("click", () => this.spin());
+            document.getElementById("spinButton").addEventListener("click", () => this.spin());
+
+            document.getElementById("addBtn").addEventListener("click", () => {
+                const input = document.getElementById("entryInput");
+                this.addEntry(input.value);
+                input.value = "";
+                input.focus();
+            });
+
+            document.getElementById("entryInput").addEventListener("keypress", (e) => {
+                if (e.key === "Enter") {
+                    document.getElementById("addBtn").click();
+                }
+            });
+
+            document.getElementById("clearBtn").addEventListener("click", () => this.clearAll());
+            document.getElementById("shuffleBtn").addEventListener("click", () => this.shuffle());
+            document.getElementById("sortBtn").addEventListener("click", () => this.sort());
+
+            document.getElementById("fullscreenBtn").addEventListener("click", () => {
+                if (!document.fullscreenElement) {
+                    document.documentElement.requestFullscreen();
+                }
+                else {
+                    document.exitFullscreen();
+                }
+            });
+
+            document.getElementById("closeWinnerBtn").addEventListener("click", () => {
+                document.getElementById("overlay").classList.remove("show");
+                document.getElementById("winnerDisplay").classList.remove("show");
+            });
+
+            document.getElementById("overlay").addEventListener("click", () => {
+                document.getElementById("overlay").classList.remove("show");
+                document.getElementById("winnerDisplay").classList.remove("show");
+            });
+
+            window.addEventListener("resize", () => {
+                this.setupCanvas();
+                this.draw();
+            });
+        }
+    }
+
+    // Initialize the wheel
+    const wheel = new WheelOfLuck();
 
     // QR code Scanner
 
