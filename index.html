@@ -580,7 +580,7 @@
 
 <!-- ** Supermarket ** -->
 <div class="container" style="max-width: 800px;">
-    <div class="header" onclick="newTab()">
+    <div class="header">
         <div style="font-size: 3.6rem;">🛒</div>
         <h1>Price Comparison</h1>
         <p>Find out which is the cheapest with ease</p>
@@ -607,7 +607,7 @@
 
 <!-- ** QR code Scanner ** -->
 <div class="container" style="max-width: 500px;">
-    <div class="header" onclick="refresh()">
+    <div class="header">
         <svg width="64px" height="64px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd"
                   clip-rule="evenodd"
@@ -670,15 +670,6 @@
 </div>
 
 <script>
-    function refresh() {
-        window.location.reload();
-    }
-
-    function newTab() {
-        const currentUrl = window.location.href; // Get the current URL
-        window.open(currentUrl, "_blank"); // Open the current URL in a new tab
-    }
-
     // ** Supermarket **
 
     let products = [];
